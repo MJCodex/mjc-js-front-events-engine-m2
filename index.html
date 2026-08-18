@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metin2 Iberia · Calendario</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <span class="eyebrow">METIN2 IBERIA</span>
+    <h1>Calendario de eventos</h1>
+    <p>Permanentes · rotación · datos de dominio</p>
+  </div>
+  <div class="controls">
+    <button id="prevMonth" aria-label="Mes anterior">‹</button>
+    <select id="monthSelect" aria-label="Mes"></select>
+    <select id="yearSelect" aria-label="Año"></select>
+    <button id="nextMonth" aria-label="Mes siguiente">›</button>
+    <button id="todayBtn">Hoy</button>
+  </div>
+</header>
+<main class="page">
+  <section class="summary">
+    <div><span class="live-dot"></span><strong id="monthTitle"></strong><span class="muted"> · Iberia</span></div>
+    <div class="legend"><span><i class="static-dot"></i>Estático</span><span><i class="rotation-dot"></i>Rotativo</span><span><i class="recurrence-dot"></i>Recurrente</span></div>
+  </section>
+  <section class="engine-note">
+    <span><b>ENGINE</b> R1 / R2 · ciclo de 14 días</span>
+    <span>Ancla: <b>02/08/2026 = R1</b> · horarios de fuente</span>
+  </section>
+  <section class="calendar-wrap"><div id="calendar" class="calendar"></div></section>
+  <section class="details">
+    <article><h2>Reglas</h2><p>Los estáticos se resuelven por día de semana. Los rotativos usan un ciclo continuo de 14 días.</p></article>
+</main>
+<script src="time-utils.js"></script>
+<script src="events.js"></script>
+<script src="calendar.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
