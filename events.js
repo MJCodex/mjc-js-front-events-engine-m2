@@ -1,6 +1,5 @@
 /*
  * Metin2 Iberia Event Engine v2
- * Fuente: data-old-site.json analizado.
  * Esta versión excluye eventos especial/global.
  */
 const EVENT_DEFINITIONS={
@@ -15,7 +14,6 @@ const EVENT_DEFINITIONS={
   tituloDragor:{name:"Título: Dragor",icon:"assets/icons/Titulo.webp",type:"static"},
   alubia:{name:"Alubia Verde Dragon",icon:"assets/icons/Alubia-verde-del-dragon.webp",type:"static"},
 
-  // MODIFICADO: Super Metines pasa a ser recurrencia.
   superMetines:{name:"Super Metines",icon:"assets/icons/Super-metines.webp",type:"recurrence"},
 
   objetoEncantado:{name:"Objeto Encantado (B)",icon:"assets/icons/Objeto-encantado.webp",type:"rotation"},

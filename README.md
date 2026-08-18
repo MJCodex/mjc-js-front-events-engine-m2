@@ -31,3 +31,7 @@ La rotación se calcula matemáticamente desde la fecha ancla y no depende de la
 - `app.js`: navegación.
 - `styles.css`: UI.
 - `index.html`: estructura.
+
+## Licencia
+
+Este proyecto se distribuye bajo una licencia de uso y distribución con valor añadido. Consulta el archivo [LICENSE](LICENSE) para más detalles.

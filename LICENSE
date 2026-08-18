@@ -1,0 +1,47 @@
+# LICENCIA DE USO Y DISTRIBUCIÓN — VALOR AÑADIDO
+Copyright © 2026 MJCodex
+
+## 1. Permisos
+Se permite, de forma gratuita:
+
+- Descargar y utilizar este software.
+- Estudiar y modificar su código fuente.
+- Crear copias y forks.
+- Incorporarlo a proyectos personales, educativos o internos.
+- Crear productos derivados y distribuirlos comercialmente, siempre que se cumplan las condiciones de esta licencia.
+
+## 2. Distribución comercial
+Se permite vender un producto basado en este software únicamente cuando dicho producto incorpore **modificaciones sustanciales o un valor añadido significativo** respecto al proyecto original.
+
+Se considera valor añadido significativo, entre otros:
+
+- Nuevas funcionalidades relevantes.
+- Módulos o componentes propios de importancia.
+- Integraciones sustanciales con otros sistemas o servicios.
+- Cambios significativos en la lógica, arquitectura o funcionamiento.
+- Mejoras que transformen materialmente el propósito o las capacidades del software.
+
+No se considera valor añadido significativo:
+
+- Cambiar colores, fuentes, iconos o estilos.
+- Cambiar el logotipo, nombre o textos.
+- Realizar pequeños cambios en la interfaz.
+- Modificar configuraciones o archivos menores.
+- Reorganizar, renombrar o refactorizar superficialmente el código.
+- Realizar una combinación de cambios menores cuyo resultado siga siendo esencialmente el mismo producto.
+
+Por lo tanto, no se permite vender el software original, ni una copia sustancialmente equivalente, ni una versión que únicamente haya recibido modificaciones cosméticas o superficiales.
+
+## 3. Reconocimiento
+Los productos derivados comerciales deben conservar una referencia razonable al proyecto original y a su autor, salvo autorización expresa del autor.
+
+## 4. Código fuente
+Las modificaciones realizadas sobre este proyecto no pasan a ser propiedad del autor original. Cada desarrollador conserva los derechos que legalmente le correspondan sobre sus propias aportaciones.
+
+## 5. Sin garantía
+Este software se proporciona "tal cual", sin garantías de ningún tipo. El autor no será responsable por daños derivados de su utilización.
+
+## 6. Interpretación
+Esta licencia tiene como finalidad permitir el uso, aprendizaje, modificación y desarrollo comercial del software, evitando únicamente la redistribución comercial de copias o modificaciones superficiales que no aporten un valor sustancial al proyecto original.
+
+El autor se reserva el derecho de determinar, dentro de los límites de la legislación aplicable, si una distribución comercial cumple las condiciones de esta licencia.

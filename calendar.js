@@ -46,6 +46,5 @@ function createEventCard(event, date) {
     time.textContent = `Hora local: ${localEvent.localStart} - ${localEvent.localEnd}`;
 
     const source = document.createElement("div"); source.className = "event-source";
-    //source.textContent = event.type === "rotation" ? event.rotation : event.source === "shared" ? "compartido" : "estático";
     body.append(name, time, source); card.append(icon, body); return card;
 }
