@@ -3,27 +3,27 @@
  * Esta versión excluye eventos especial/global.
  */
 const EVENT_DEFINITIONS={
-  lectura:{name:"Lectura concentrada",icon:"assets/icons/Lectura-concentrada.webp",type:"static"},
-  tituloReno:{name:"Título: Reno",icon:"assets/icons/Titulo.webp",type:"static"},
-  tela:{name:"Tela Delicada",icon:"assets/icons/Tela-delicada.webp",type:"static"},
-  tituloLeon:{name:"Título: León",icon:"assets/icons/Titulo.webp",type:"static"},
-  cor:{name:"Cor draconis (en bruto)",icon:"assets/icons/Cor-draconis.webp",type:"static"},
-  tituloLobo:{name:"Título: Lobo",icon:"assets/icons/Titulo.webp",type:"static"},
-  tituloMoa:{name:"Título: Moa",icon:"assets/icons/Titulo.webp",type:"static"},
-  bendicion:{name:"Bendición pequeña",icon:"assets/icons/Bendición-pequeña.webp",type:"static"},
-  tituloDragor:{name:"Título: Dragor",icon:"assets/icons/Titulo.webp",type:"static"},
-  alubia:{name:"Alubia Verde Dragon",icon:"assets/icons/Alubia-verde-del-dragon.webp",type:"static"},
+  lectura:{name:"Lectura concentrada",icon:"assets/icons/lectura-concentrada.webp",type:"static"},
+  tituloReno:{name:"Título: Reno",icon:"assets/icons/titulo.webp",type:"static"},
+  tela:{name:"Tela Delicada",icon:"assets/icons/tela-delicada.webp",type:"static"},
+  tituloLeon:{name:"Título: León",icon:"assets/icons/titulo.webp",type:"static"},
+  cor:{name:"Cor draconis (en bruto)",icon:"assets/icons/cor-draconis.webp",type:"static"},
+  tituloLobo:{name:"Título: Lobo",icon:"assets/icons/titulo.webp",type:"static"},
+  tituloMoa:{name:"Título: Moa",icon:"assets/icons/titulo.webp",type:"static"},
+  bendicion:{name:"Bendición pequeña",icon:"assets/icons/bendicion-pequena.webp",type:"static"},
+  tituloDragor:{name:"Título: Dragor",icon:"assets/icons/titulo.webp",type:"static"},
+  alubia:{name:"Alubia Verde Dragon",icon:"assets/icons/alubia-verde-del-dragon.webp",type:"static"},
 
-  superMetines:{name:"Super Metines",icon:"assets/icons/Super-metines.webp",type:"recurrence"},
+  superMetines:{name:"Super Metines",icon:"assets/icons/super-metines.webp",type:"recurrence"},
 
-  objetoEncantado:{name:"Objeto Encantado (B)",icon:"assets/icons/Objeto-encantado.webp",type:"rotation"},
+  objetoEncantado:{name:"Objeto Encantado (B)",icon:"assets/icons/objeto-encantado.webp",type:"rotation"},
   ebanoCarmin:{name:"Caja de Ébano Carmín",icon:"assets/icons/caja-ebano-carmin.webp",type:"rotation"},
-  teletransporte:{name:"Anillo de Teletransporte",icon:"assets/icons/Anillo-de-teletransporte.webp",type:"rotation"},
+  teletransporte:{name:"Anillo de Teletransporte",icon:"assets/icons/anillo-de-teletransporte.webp",type:"rotation"},
   pesca:{name:"Rompecabezas de pez",icon:"assets/icons/pesca.webp",type:"rotation"},
   exorcismo:{name:"Pergamino de exorcismo",icon:"assets/icons/pergamino-de-exorcismo.webp",type:"rotation"},
-  coaccion:{name:"Objeto coacción (B)",icon:"assets/icons/Objeto-Coaccion.webp",type:"rotation"},
-  llamaDragon:{name:"Llama dragón (B)",icon:"assets/icons/Llama-dragon-b.webp",type:"rotation"},
-  luzLuna:{name:"Caja tesoro Luz de Luna",icon:"assets/icons/Caja-tesoro-luz-luna.webp",type:"rotation"},
+  coaccion:{name:"Objeto coacción (B)",icon:"assets/icons/objeto-coaccion.webp",type:"rotation"},
+  llamaDragon:{name:"Llama dragón (B)",icon:"assets/icons/llama-dragon-b.webp",type:"rotation"},
+  luzLuna:{name:"Caja tesoro Luz de Luna",icon:"assets/icons/caja-tesoro-luz-luna.webp",type:"rotation"},
 
   // ============================================================
   // CAJAS DE ÉBANO CON RECURRENCIA ESPECÍFICA
@@ -69,7 +69,7 @@ const EVENT_DEFINITIONS={
 
   mineria:{
     name:"Minería",
-    icon:"assets/icons/minería.webp",
+    icon:"assets/icons/mineria.webp",
     type:"recurrence"
   }
 };

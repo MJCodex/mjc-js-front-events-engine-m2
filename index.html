@@ -13,7 +13,7 @@
   <div>
     <span class="eyebrow">METIN2 IBERIA</span>
     <h1>Calendario de eventos</h1>
-    <p>Permanentes · rotación · datos de dominio</p>
+    <p>Permanentes · rotación · horarios en tu zona</p>
   </div>
   <div class="controls">
     <button id="prevMonth" aria-label="Mes anterior">‹</button>
@@ -26,15 +26,12 @@
 <main class="page">
   <section class="summary">
     <div><span class="live-dot"></span><strong id="monthTitle"></strong><span class="muted"> · Iberia</span></div>
-    <div class="legend"><span><i class="static-dot"></i>Estático</span><span><i class="rotation-dot"></i>Rotativo</span><span><i class="recurrence-dot"></i>Recurrente</span></div>
-  </section>
-  <section class="engine-note">
-    <span><b>ENGINE</b> R1 / R2 · ciclo de 14 días</span>
-    <span>Ancla: <b>02/08/2026 = R1</b> · horarios de fuente</span>
+    <div class="legend"><span><i class="static-dot"></i>Semanal</span><span><i class="rotation-dot"></i>Rotación</span><span><i class="recurrence-dot"></i>Periódico</span></div>
   </section>
   <section class="calendar-wrap"><div id="calendar" class="calendar"></div></section>
   <section class="details">
-    <article><h2>Reglas</h2><p>Los estáticos se resuelven por día de semana. Los rotativos usan un ciclo continuo de 14 días.</p></article>
+    <article><h2>¿Cómo funciona?</h2><p>Los eventos semanales ocurren siempre el mismo día de la semana. Los eventos de rotación se alternan cada dos semanas entre fin de semana y fin de semana.</p></article>
+  </section>
 </main>
 <script src="time-utils.js"></script>
 <script src="events.js"></script>

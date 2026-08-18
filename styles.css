@@ -13,11 +13,35 @@
 }
 
 * {
-    box-sizing: border-box
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--panel)
 }
 
 html {
     color-scheme: dark
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px
+}
+
+::-webkit-scrollbar-track {
+    background: var(--panel)
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3b4653
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--panel)
 }
 
 body {
