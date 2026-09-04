@@ -248,7 +248,9 @@ select:hover {
 .date-cell,
 .event-cell {
     padding: 11px;
-    border-right: 1px solid var(--border)
+    border-right: 1px solid var(--border);
+    display: grid;
+    align-content: center;
 }
 
 .date-cell {
