@@ -12,9 +12,13 @@ function renderCalendar(year, month) {
     header.className = "calendar-header";
     header.innerHTML = "<div>Fecha</div>" + Array.from({ length: columns }, (_, i) => `<div>Evento ${i + 1}</div>`).join("");
     fragment.appendChild(header);
+    const today = new Date();
     for (const rowData of rows) {
         const row = document.createElement("div"); row.className = "calendar-row";
+        const isToday = rowData.date.toDateString() === today.toDateString();
+        if (isToday) row.classList.add("today");
         const date = document.createElement("div"); date.className = "date-cell";
+        if (isToday) date.classList.add("today");
         date.innerHTML = `<div class="day-name">${WEEKDAYS[rowData.date.getDay()]}</div><div class="day-number">${rowData.date.getDate()}</div>`;
         row.appendChild(date);
         for (let i = 0; i < columns; i++) {
