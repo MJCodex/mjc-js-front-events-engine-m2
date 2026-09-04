@@ -166,7 +166,7 @@ const EBANO_RECURRENCES={
     anchor:new Date(2026,1,14),
     intervalDays:28,
     weekday:6,
-    start:"20:00",
+    start:"18:00",
     end:"23:59"
   },
 
@@ -174,7 +174,7 @@ const EBANO_RECURRENCES={
     anchor:new Date(2026,1,20),
     intervalDays:42,
     weekday:5,
-    start:"20:00",
+    start:"18:00",
     end:"23:59"
   },
 
@@ -182,7 +182,7 @@ const EBANO_RECURRENCES={
     anchor:new Date(2026,2,6),
     intervalDays:42,
     weekday:5,
-    start:"20:00",
+    start:"18:00",
     end:"23:59"
   },
 
@@ -190,7 +190,7 @@ const EBANO_RECURRENCES={
     anchor:new Date(2026,1,6),
     intervalDays:42,
     weekday:5,
-    start:"20:00",
+    start:"18:00",
     end:"23:59"
   }
 };
