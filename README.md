@@ -15,10 +15,10 @@ Versión revisada del calendario con el engine aprobado.
 
 ## Tests
 
-Ejecuta la comparación del Festival de la cosecha de octubre de 2026 contra `docs/data.json` con:
+Ejecuta la suite de regresión, incluida la comparación de recurrencias de febrero a octubre de 2026 y las excepciones del calendario oficial de Iberia:
 
 ```sh
-node --test tests/festival-cosecha-octubre-2026.test.js
+node --test
 ```
 
 ## Rotación

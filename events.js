@@ -175,7 +175,8 @@ const EBANO_RECURRENCES={
     intervalDays:42,
     weekday:5,
     start:"18:00",
-    end:"23:59"
+    end:"23:59",
+    excludedDates:["2026-10-30"]
   },
 
   ebanoAmarilla:{
@@ -202,9 +203,11 @@ const EBANO_RECURRENCES={
  * ============================================================
  *
  * Super Metines:
- *   21/02 → 18/04 → 16/05 → 13/06 → 11/07
- *   = 28 días
+ *   21/02 → 21/03 → 18/04 → ... → 03/10
+ *   = 28 días desde febrero de 2026
  *   sábado
+ *   El 21/02 tiene horario excepcional de 18:00.
+ *   El calendario oficial de octubre omite el 31/10.
  *
  * 75% EXP:
  *   22/02 → 22/03 → 19/04 → 17/05 → 14/06 → 12/07
@@ -234,7 +237,11 @@ const EVENT_RECURRENCES={
     intervalDays:28,
     weekday:6,
     start:"21:00",
-    end:"23:59"
+    end:"23:59",
+    dateOverrides:{
+      "2026-02-21":{start:"18:00"}
+    },
+    excludedDates:["2026-10-31"]
   },
 
   exp75:{
@@ -330,6 +337,14 @@ function minutes(t){
   return h*60+m;
 }
 
+function dateKey(date){
+  const year=date.getFullYear();
+  const month=String(date.getMonth()+1).padStart(2,"0");
+  const day=String(date.getDate()).padStart(2,"0");
+
+  return `${year}-${month}-${day}`;
+}
+
 
 function resolveStaticEvents(date){
 
@@ -379,6 +394,7 @@ function resolveRotationEvents(date){
 function resolveEbanoEvents(date){
 
   const events=[];
+  const key=dateKey(date);
 
   for(
     const [eventId,rule]
@@ -391,6 +407,10 @@ function resolveEbanoEvents(date){
     );
 
     if(days<0){
+      continue;
+    }
+
+    if(rule.excludedDates?.includes(key)){
       continue;
     }
 
@@ -423,6 +443,7 @@ function resolveEbanoEvents(date){
 function resolveEventRecurrences(date){
 
   const events=[];
+  const key=dateKey(date);
 
   for(
     const [eventId,rule]
@@ -438,6 +459,10 @@ function resolveEventRecurrences(date){
       continue;
     }
 
+    if(rule.excludedDates?.includes(key)){
+      continue;
+    }
+
     if(days%rule.intervalDays!==0){
       continue;
     }
@@ -446,11 +471,13 @@ function resolveEventRecurrences(date){
       continue;
     }
 
+    const dateOverride=rule.dateOverrides?.[key];
+
     events.push({
       ...EVENT_DEFINITIONS[eventId],
       eventId,
-      start:rule.start,
-      end:rule.end,
+      start:dateOverride?.start||rule.start,
+      end:dateOverride?.end||rule.end,
       source:"event-recurrence"
     });
   }

@@ -433,8 +433,10 @@ Periodicidad:
 ```text
 28 días
 sábado
-18:00–23:59
+18:00–23:59 (regla actualmente configurada)
 ```
+
+**Regla sin validar contra el archivo de foros:** `docs/foro.md` no contiene apariciones de Caja de Ébano Carmín. En cambio, `docs/data.json` registra apariciones de Iberia en 2026 el 14/02, 14/03, 11/04, 09/05, 04/07 y 24/10, normalmente a las `20:00–23:59`; faltan varias fechas que produciría un intervalo fijo de 28 días y las horas no coinciden con esta regla del engine. No hay evidencia suficiente para declarar determinista esta recurrencia de Iberia. Mantenerla como discrepancia pendiente, sin extrapolarla como regla confirmada.
 
 ---
 
@@ -446,11 +448,12 @@ ebanoPompa:{
   intervalDays:42,
   weekday:5,
   start:"18:00",
-  end:"23:59"
+  end:"23:59",
+  excludedDates:["2026-10-30"]
 }
 ```
 
-Fechas generadas desde el anchor y el intervalo:
+Fechas publicadas para Iberia en 2026 que siguen el anchor y el intervalo:
 
 ```text
 20/02
@@ -459,7 +462,7 @@ Fechas generadas desde el anchor y el intervalo:
 26/06
 07/08
 18/09
-30/10
+30/10 (excluido por el calendario oficial de Iberia)
 ...
 ```
 
@@ -470,6 +473,8 @@ Periodicidad:
 viernes
 18:00–23:59
 ```
+
+Este intervalo coincide con las fechas publicadas desde febrero hasta septiembre de 2026. No debe proyectarse sin consultar el calendario mensual oficial: octubre no programa la siguiente fecha teórica, 30/10.
 
 ---
 
@@ -568,14 +573,18 @@ superMetines:{
   intervalDays:28,
   weekday:6,
   start:"21:00",
-  end:"23:59"
+  end:"23:59",
+  dateOverrides:{
+    "2026-02-21":{start:"18:00"}
+  },
+  excludedDates:["2026-10-31"]
 }
 ```
 
 Fechas generadas desde el anchor y el intervalo:
 
 ```text
-21/02
+21/02 (18:00–23:59)
 21/03
 18/04
 16/05
@@ -584,16 +593,18 @@ Fechas generadas desde el anchor y el intervalo:
 08/08
 05/09
 03/10
-31/10
+31/10 (excluido por el calendario oficial de Iberia)
 ```
 
-Regla:
+Regla observada en los calendarios publicados de 2026:
 
 ```text
-cada 28 días
+cada 28 días, con la excepción de horario indicada para 21/02
 sábado
-21:00–23:59
+normalmente 21:00–23:59
 ```
+
+Las fechas de marzo a octubre siguen intervalos de 28 días hasta 03/10. La fecha teórica siguiente, 31/10, no aparece en el calendario oficial de octubre. Los años anteriores del archivo `docs/foro.md` contienen intervalos distintos, por lo que esta periodicidad no debe tratarse como regla universal permanente.
 
 ---
 
@@ -1295,10 +1306,20 @@ No aparece en `ROTATIONS`. Mantener cada evento en una sola regla evita duplicar
 La suite disponible se ejecuta desde la raíz del proyecto:
 
 ```sh
-node --test tests/festival-cosecha-octubre-2026.test.js
+node --test
 ```
 
-La prueba actual compara las fechas y horas del Festival de la cosecha de Iberia en octubre de 2026 con `docs/data.json`. Debe ampliarse con cobertura de cada regla y con fechas límite de recurrencias:
+La suite compara las fechas y los horarios que genera el engine, de febrero a octubre de 2026, con los eventos recurrentes publicados en `docs/foro.md`. Cubre Pompa, Supermétines, Ébano Amarillo/Rojo, Minería, Tique, EXP y Cosecha. También verifica que, aunque los intervalos base proyectarían Pompa al 30/10 y Supermétines al 31/10, el calendario oficial de Iberia no los programa en esas fechas. `events.js` declara ambas fechas excluidas; se conservan las demás recurrencias.
+
+`docs/data.json` tampoco debe usarse para completar esos dos días: no tiene entradas de Iberia para el 30 ni el 31. La entrada de Super Metines del 31/10 a las 20:00 en ese archivo corresponde a Europe, no a Iberia. Los calendarios de servidores son específicos; por ejemplo, el anuncio oficial de Tigerghost programa eventos diferentes en esas fechas.
+
+### Fuentes oficiales consultadas
+
+- [Archivo de calendarios extraídos](./foro.md) — recopilación de anuncios mensuales de Iberia entre 2023 y 2026. Los calendarios publicados son la referencia para verificar las recurrencias y sus excepciones; los anuncios representan el horario publicado en cada mes, no una garantía de futuras recurrencias.
+- [Iberia: Eventos de octubre](https://board.es.metin2.gameforge.com/index.php?thread/51991-iberia-eventos-de-octubre/) — foro oficial ES de Metin2/Gameforge, publicado el 25/09/2026. La tabla identifica expresamente el servidor Iberia, presenta horarios CEST y programa fechas del 02 al 25 de octubre; no lista Caja de Ébano Pompa para el 30 ni Supermétines para el 31. El anuncio advierte que el horario puede cambiar, por lo que esta conclusión corresponde a la versión consultada.
+- [Tigerghost: Eventos de octubre](https://board.es.metin2.gameforge.com/index.php?thread/52016-tigerghost-eventos-de-octubre/) — foro oficial ES de Metin2/Gameforge, publicado el 30/09/2026. Sirve como contraste de que el calendario depende del servidor: para el 30 lista Pergamino Bendición y Bendición pequeña, y para el 31 Caja de Ébano Carmín y Rompecabezas de pez; no se usa como fuente para Iberia.
+
+Las pruebas de calendario comprueban días vecinos para evitar adelantos o repeticiones fuera del intervalo. Debe ampliarse la cobertura para cada regla y para los límites de todos los tipos de mes:
 
 ### Fecha conocida
 
@@ -1371,11 +1392,11 @@ no debe contenerlo.
 | Coacción               | Rotation   | R2                   |
 | Llama Dragón           | Rotation   | R2                   |
 | Luz de Luna            | Rotation   | R2                   |
-| Ébano Carmín           | Recurrence | 28 días; sábado, 18:00–23:59 |
-| Ébano Pompa            | Recurrence | 42 días; viernes, 18:00–23:59 |
+| Ébano Carmín           | Recurrence | Regla configurada de 28 días; discrepante/no validada |
+| Ébano Pompa            | Recurrence | 42 días; viernes, 18:00–23:59; 30/10 excluido |
 | Ébano Amarilla         | Recurrence | 42 días; viernes, 18:00–23:59 |
 | Ébano Roja              | Recurrence | 42 días; viernes, 18:00–23:59 |
-| Super Metines          | Recurrence | 28 días; sábado, 21:00–23:59 |
+| Super Metines          | Recurrence | 28 días en 2026; sábado, normalmente 21:00–23:59; 21/02 a las 18:00 y 31/10 excluido |
 | 75% EXP                | Recurrence | 28 días; domingo, 18:00–23:59 |
 | Tique de entrada       | Recurrence | 28 días; domingo, 18:00–23:59 |
 | Minería                | Recurrence | 28 días; sábado, 21:00–23:59 |
