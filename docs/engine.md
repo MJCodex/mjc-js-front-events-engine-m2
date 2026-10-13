@@ -138,7 +138,7 @@ Festival de la cosecha
 
 se modela como:
 
-> último sábado + último domingo del mes.
+> el último fin de semana completo del mes.
 
 No se utiliza `intervalDays: 28` porque el patrón observado corresponde al calendario mensual, no a una distancia fija entre fechas.
 
@@ -717,11 +717,14 @@ Los datos observados muestran apariciones como:
 
 25/07/2026
 26/07/2026
+
+24/10/2026
+25/10/2026
 ```
 
 El patrón utilizado por el engine es:
 
-> **Último sábado + último domingo del mes.**
+> **Último fin de semana completo del mes** (el sábado y domingo anteriores o iguales al último domingo del mes).
 
 No se utiliza:
 

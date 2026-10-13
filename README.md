@@ -11,6 +11,15 @@ Versión revisada del calendario con el engine aprobado.
 - Especiales y globales están excluidos.
 - Los horarios se muestran tal como aparecen en la fuente.
 - Se soportan eventos que terminan después de medianoche, por ejemplo `23:00–01:00`.
+- El Festival de la cosecha ocurre durante el último fin de semana completo del mes.
+
+## Tests
+
+Ejecuta la comparación del Festival de la cosecha de octubre de 2026 contra `docs/data.json` con:
+
+```sh
+node --test tests/festival-cosecha-octubre-2026.test.js
+```
 
 ## Rotación
 

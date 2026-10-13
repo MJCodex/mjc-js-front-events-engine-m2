@@ -222,7 +222,7 @@ const EBANO_RECURRENCES={
  *   sábado
  *
  * Festival de la cosecha:
- *   Último sábado + último domingo del mes.
+ *   Último fin de semana completo del mes.
  *
  * ============================================================
  */
@@ -463,7 +463,7 @@ function resolveEventRecurrences(date){
  * ============================================================
  * NUEVO — FESTIVAL DE LA COSECHA
  *
- * Último sábado + último domingo del mes.
+ * Último fin de semana completo del mes.
  * ============================================================
  */
 function resolveMonthlyEvents(date){
@@ -484,21 +484,15 @@ function resolveMonthlyEvents(date){
     0
   );
 
-  /*
-   * Calculamos el último sábado y domingo del mes.
-   */
-  const lastSaturday=new Date(lastDay);
-
-  lastSaturday.setDate(
-    lastDay.getDate() -
-    ((lastDay.getDay()-6+7)%7)
-  );
-
   const lastSunday=new Date(lastDay);
-
   lastSunday.setDate(
     lastDay.getDate() -
     lastDay.getDay()
+  );
+
+  const lastSaturday=new Date(lastSunday);
+  lastSaturday.setDate(
+    lastSunday.getDate()-1
   );
 
   const isLastWeekend=
