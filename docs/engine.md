@@ -2,9 +2,9 @@
 
 ## Documentación técnica para continuidad del desarrollo
 
-> **Estado:** Engine v2
+> **Estado:** Implementación en `events.js`
 > **Servidor objetivo:** Metin2 Iberia — Gameforge
-> **Fuente principal:** `data-old-site.json` y análisis histórico de eventos de Iberia
+> **Referencia histórica:** `docs/data.json`; no se carga en tiempo de ejecución
 > **Objetivo:** Generar automáticamente el calendario de eventos de Iberia a partir de reglas reproducibles.
 
 ---
@@ -407,12 +407,12 @@ ebanoCarmin:{
   anchor:new Date(2026,1,14),
   intervalDays:28,
   weekday:6,
-  start:"20:00",
+  start:"18:00",
   end:"23:59"
 }
 ```
 
-Patrón observado:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 14/02
@@ -420,6 +420,11 @@ Patrón observado:
 11/04
 09/05
 06/06
+04/07
+01/08
+29/08
+26/09
+24/10
 ...
 ```
 
@@ -428,7 +433,7 @@ Periodicidad:
 ```text
 28 días
 sábado
-20:00–23:59
+18:00–23:59
 ```
 
 ---
@@ -440,18 +445,21 @@ ebanoPompa:{
   anchor:new Date(2026,1,20),
   intervalDays:42,
   weekday:5,
-  start:"20:00",
+  start:"18:00",
   end:"23:59"
 }
 ```
 
-Patrón:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 20/02
 03/04
 15/05
 26/06
+07/08
+18/09
+30/10
 ...
 ```
 
@@ -460,7 +468,7 @@ Periodicidad:
 ```text
 42 días
 viernes
-20:00–23:59
+18:00–23:59
 ```
 
 ---
@@ -472,20 +480,24 @@ ebanoAmarilla:{
   anchor:new Date(2026,2,6),
   intervalDays:42,
   weekday:5,
-  start:"20:00",
+  start:"18:00",
   end:"23:59"
 }
 ```
 
-Patrón:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 06/03
 17/04
 29/05
 10/07
+21/08
+02/10
 ...
 ```
+
+La hora es `18:00–23:59`.
 
 ---
 
@@ -496,45 +508,30 @@ ebanoRoja:{
   anchor:new Date(2026,1,6),
   intervalDays:42,
   weekday:5,
-  start:"20:00",
+  start:"18:00",
   end:"23:59"
 }
 ```
 
-Patrón observado:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 06/02
 20/03
 01/05
+12/06
 24/07
+04/09
+16/10
 ```
 
-Entre:
-
-```text
-01/05 → 24/07
-```
-
-hay 84 días.
-
-La interpretación adoptada fue:
-
-> La aparición de 84 días se considera una anomalía/omisión del dato y no una nueva periodicidad.
-
-No se debe convertir ese intervalo aislado en una regla de 84 días.
+La regla implementada es cada 42 días, a las `18:00–23:59`; el 12/06 forma parte de la secuencia entre el 01/05 y el 24/07.
 
 ---
 
-# 11. Por qué Ébano se separó de R1/R2
+# 11. Separación de Ébano y R1/R2
 
-Este punto es importante para futuros desarrolladores.
-
-Originalmente algunos eventos podían estar mezclados con la rotación.
-
-Sin embargo, las cajas de Ébano mostraron periodicidades que no coinciden con el ciclo principal.
-
-Por eso:
+En la implementación actual, los eventos rotativos y las cajas de Ébano se resuelven con reglas independientes:
 
 ```text
 ROTATIONS
@@ -555,7 +552,7 @@ Por ejemplo:
 ...resolveEbanoEvents(date)
 ```
 
-Esto evita que una corrección de la rotación altere accidentalmente las cajas de Ébano.
+Las cajas de Ébano tienen sus propios anchors e intervalos; cambiar el ciclo de R1/R2 no modifica esas recurrencias.
 
 ---
 
@@ -575,14 +572,19 @@ superMetines:{
 }
 ```
 
-Patrón:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 21/02
+21/03
 18/04
 16/05
 13/06
 11/07
+08/08
+05/09
+03/10
+31/10
 ```
 
 Regla:
@@ -607,7 +609,7 @@ exp75:{
 }
 ```
 
-Patrón:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 22/02
@@ -616,6 +618,11 @@ Patrón:
 17/05
 14/06
 12/07
+09/08
+06/09
+04/10
+01/11
+29/11
 ```
 
 Regla:
@@ -640,7 +647,7 @@ ticketEntrada:{
 }
 ```
 
-Patrón:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 08/02
@@ -650,6 +657,11 @@ Patrón:
 31/05
 28/06
 26/07
+23/08
+20/09
+18/10
+15/11
+13/12
 ```
 
 Regla:
@@ -674,7 +686,7 @@ mineria:{
 }
 ```
 
-Patrón:
+Fechas generadas desde el anchor y el intervalo:
 
 ```text
 07/02
@@ -684,6 +696,11 @@ Patrón:
 30/05
 27/06
 25/07
+22/08
+19/09
+17/10
+14/11
+12/12
 ```
 
 Regla:
@@ -862,14 +879,14 @@ Cosecha utiliza:
 resolveMonthlyEvents(date)
 ```
 
-El algoritmo calcula:
+El algoritmo calcula el último domingo del mes y el sábado inmediatamente anterior:
 
 ```text
-último sábado
 último domingo
+sábado anterior a ese domingo
 ```
 
-del mes actual y compara la fecha solicitada.
+Compara la fecha solicitada con esos dos días consecutivos. Si el último día del mes es sábado, ese sábado no se combina con el domingo anterior: se elige el sábado y domingo anteriores. El evento se genera de `00:00` a `23:59`.
 
 No depende de un anchor histórico.
 
@@ -987,7 +1004,7 @@ y **no**:
 01:00 → 23:00
 ```
 
-El renderer debe tener en cuenta `source === "cross-midnight"` si necesita calcular duración, fecha final o representación visual.
+La regla conserva `source: "cross-midnight"`. Al convertir las horas, `time-utils.js` también detecta el cruce cuando la hora final es anterior a la inicial y asigna el final al día siguiente.
 
 No asumir que:
 
@@ -1125,15 +1142,7 @@ SVG
 
 # 23. Renderer de iconos
 
-El renderer actual originalmente utilizaba:
-
-```js
-const icon = document.createElement("div");
-icon.className = "event-icon";
-icon.textContent = event.icon;
-```
-
-Para assets debe utilizar:
+`calendar.js` renderiza los iconos definidos por el engine como imágenes:
 
 ```js
 const icon = document.createElement("img");
@@ -1210,20 +1219,13 @@ etc.
 
 ### No convertir una coincidencia en regla
 
-Si se observan:
+No deducir una periodicidad a partir de dos fechas aisladas. Por ejemplo, en la recurrencia vigente de Ébano Roja:
 
 ```text
-01/05
-24/07
+01/05 → 12/06 → 24/07
 ```
 
-no asumir automáticamente:
-
-```text
-cada 84 días
-```
-
-si existe evidencia de que el intervalo corresponde a una anomalía.
+el engine implementa 42 días entre fechas consecutivas. La regla que prevalece es el anchor y el intervalo declarados en `events.js`; cualquier diferencia con la fuente histórica debe investigarse antes de cambiarla.
 
 ---
 
@@ -1276,37 +1278,27 @@ Esto permite detectar duplicaciones.
 
 # 26. Problema conocido: duplicación
 
-Un evento no debe ser generado por dos fuentes.
-
-Ejemplo histórico:
-
-```text
-ebanoCarmin
-```
-
-estaba dentro de una rotación y posteriormente recibió una recurrencia independiente.
-
-La solución fue retirar:
-
-```js
-r("ebanoCarmin","20:00","23:59")
-```
-
-de `R1` y dejarlo exclusivamente en:
+En la configuración actual, Caja de Ébano Carmín está declarada únicamente en:
 
 ```js
 EBANO_RECURRENCES
 ```
 
-Regla general:
+No aparece en `ROTATIONS`. Mantener cada evento en una sola regla evita duplicar apariciones al combinar los resolvers del pipeline.
 
-> **Una vez que un evento queda aislado en una recurrencia específica, debe eliminarse de cualquier otra fuente que produzca la misma aparición.**
+> **Cada aparición debe provenir de una sola regla; al mover un evento a otro resolver, retirar la regla anterior.**
 
 ---
 
-# 27. Pruebas recomendadas
+# 27. Pruebas
 
-Cada regla nueva debe tener pruebas sobre:
+La suite disponible se ejecuta desde la raíz del proyecto:
+
+```sh
+node --test tests/festival-cosecha-octubre-2026.test.js
+```
+
+La prueba actual compara las fechas y horas del Festival de la cosecha de Iberia en octubre de 2026 con `docs/data.json`. Debe ampliarse con cobertura de cada regla y con fechas límite de recurrencias:
 
 ### Fecha conocida
 
@@ -1379,15 +1371,15 @@ no debe contenerlo.
 | Coacción               | Rotation   | R2                   |
 | Llama Dragón           | Rotation   | R2                   |
 | Luz de Luna            | Rotation   | R2                   |
-| Ébano Carmín           | Recurrence | 28 días              |
-| Ébano Pompa            | Recurrence | 42 días              |
-| Ébano Amarilla         | Recurrence | 42 días              |
-| Ébano Roja             | Recurrence | 42 días              |
-| Super Metines          | Recurrence | 28 días              |
-| 75% EXP                | Recurrence | 28 días              |
-| Tique de entrada       | Recurrence | 28 días              |
-| Minería                | Recurrence | 28 días              |
-| Festival de la cosecha | Monthly    | Último fin de semana |
+| Ébano Carmín           | Recurrence | 28 días; sábado, 18:00–23:59 |
+| Ébano Pompa            | Recurrence | 42 días; viernes, 18:00–23:59 |
+| Ébano Amarilla         | Recurrence | 42 días; viernes, 18:00–23:59 |
+| Ébano Roja              | Recurrence | 42 días; viernes, 18:00–23:59 |
+| Super Metines          | Recurrence | 28 días; sábado, 21:00–23:59 |
+| 75% EXP                | Recurrence | 28 días; domingo, 18:00–23:59 |
+| Tique de entrada       | Recurrence | 28 días; domingo, 18:00–23:59 |
+| Minería                | Recurrence | 28 días; sábado, 21:00–23:59 |
+| Festival de la cosecha | Recurrence mensual | Sábado y domingo consecutivos del último fin de semana; 00:00–23:59 |
 
 ---
 
@@ -1425,6 +1417,7 @@ en lugar de:
 ```js
 [
   "2026-02-21",
+  "2026-03-21",
   "2026-04-18",
   "2026-05-16",
   "2026-06-13",
@@ -1436,16 +1429,13 @@ en lugar de:
 
 # 30. Próximos pasos recomendados
 
-Antes de continuar agregando eventos:
+La estructura del proyecto ya separa engine y renderer, la conversión horaria está implementada en `time-utils.js` y hay una prueba automatizada para Cosecha. Próximas tareas de validación:
 
-1. **Crear una suite de pruebas automatizadas.**
-2. Validar junio, julio y agosto de 2026 contra la data histórica disponible.
-3. Detectar automáticamente eventos duplicados.
-4. Separar completamente **engine** y **renderer**.
-5. Implementar conversión `Europe/Madrid → timezone del navegador`.
-6. Completar los assets de `assets/icons`.
-7. Agregar una capa de validación que avise cuando una regla genera dos veces el mismo evento.
-8. Documentar cualquier nueva excepción antes de introducirla en código.
+1. Ampliar la suite para cubrir las reglas estáticas, R1/R2, los anchors e intervalos de recurrencia y los límites de todos los tipos de mes.
+2. Comparar los meses de 2026 con la referencia histórica, teniendo en cuenta que los resolvers implementan reglas y no cargan directamente `docs/data.json`.
+3. Añadir una comprobación automatizada que detecte eventos duplicados entre resolvers.
+4. Comprobar que cada icono usado en `EVENT_DEFINITIONS` existe en `assets/icons`.
+5. Documentar las excepciones nuevas junto con la regla que realmente implementa `events.js`.
 
 ### Regla de oro para el siguiente desarrollador
 

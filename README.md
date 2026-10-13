@@ -5,13 +5,13 @@ Versión revisada del calendario con el engine aprobado.
 ## Reglas
 
 - Estáticos: se resuelven por día de semana.
-- Rotación: ciclo continuo de 14 días.
-- Ancla: `02/08/2026 = R1`.
-- R1 y R2 se aplican a sábado/domingo.
-- Especiales y globales están excluidos.
-- Los horarios se muestran tal como aparecen en la fuente.
+- Rotación: ciclo continuo de 28 días (`R1`, descanso, `R2`, descanso).
+- Ancla: `06/06/2026 = R1`; los eventos de rotación solo se asignan a sábados y domingos.
+- Las recurrencias de intervalo tienen su propio ancla y no dependen de la rotación.
+- Los eventos especiales/globales de `docs/data.json` no se cargan directamente: el engine genera las reglas declaradas en `events.js`.
+- Los horarios están definidos en las reglas del engine y representan la hora de `Europe/Madrid`.
 - Se soportan eventos que terminan después de medianoche, por ejemplo `23:00–01:00`.
-- El Festival de la cosecha ocurre durante el último fin de semana completo del mes.
+- El Festival de la cosecha ocurre el sábado y domingo consecutivos del último fin de semana completo del mes.
 
 ## Tests
 
@@ -24,14 +24,14 @@ node --test tests/festival-cosecha-octubre-2026.test.js
 ## Rotación
 
 R1:
-- sábado: Objeto Encantado (B), Caja de Ébano Carmín
+- sábado: Objeto Encantado (B)
 - domingo: Anillo de Teletransporte, Rompecabezas de pez
 
 R2:
 - sábado: Pergamino de exorcismo, Objeto coacción (B)
 - domingo: Llama dragón (B), Caja tesoro Luz de Luna
 
-La rotación se calcula matemáticamente desde la fecha ancla y no depende de la semana del mes.
+La rotación se calcula matemáticamente en un ciclo de 28 días desde el ancla indicada arriba; cada fase (R1, descanso, R2 y descanso) dura 7 días. Caja de Ébano Carmín tiene una recurrencia independiente, no forma parte de R1.
 
 ## Estructura
 
